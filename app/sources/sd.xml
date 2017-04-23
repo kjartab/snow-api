@@ -1,0 +1,23 @@
+<GDAL_WMS>
+  <Service name="WMS">
+    <Version>1.1.1</Version>
+    <ServerUrl>http://gridwms.nve.no/WMS_server/wms_server.aspx?time=2017-03-04&amp;SERVICE=WMS</ServerUrl>
+    <Layers>sd</Layers>
+    <SRS>EPSG:32633</SRS>
+    <ImageFormat>image/png</ImageFormat>
+    <Transparent>TRUE</Transparent>
+    <BBoxOrder>xyXY</BBoxOrder>
+  </Service>
+  <DataWindow>
+    <UpperLeftX>-75000</UpperLeftX>
+    <UpperLeftY>7980000</UpperLeftY>
+    <LowerRightX>1200000</LowerRightX>
+    <LowerRightY>6450000</LowerRightY>
+    <SizeX>1275</SizeX>
+    <SizeY>1530</SizeY>
+  </DataWindow>
+  <BandsCount>3</BandsCount>
+  <BlockSizeX>1024</BlockSizeX>
+  <BlockSizeY>1024</BlockSizeY>
+  <OverviewCount>20</OverviewCount>
+</GDAL_WMS>

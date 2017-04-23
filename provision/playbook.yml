@@ -1,0 +1,7 @@
+---
+- hosts: ovre2
+  become: yes
+  tasks: 
+    - synchronize: src=../{{playbook_dir}}/app dest=/opt/snow-api-app
+    - copy: src=../{{playbook_dir}}/requirements.txt dest=/opt/snow-api/requirements.txt
+    
