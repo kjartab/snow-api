@@ -1,10 +1,8 @@
 ## Snow API
 
-
-
 docker build -t "toptour/snowapi" ./
 
-docker run -d -p 8000:8000 -v /vagrant/toptourcollection/snow-api:/dev "toptour/snowapi"
+docker run -d -p 8000:8000 -v /vagrant/toptourcollection/snow-api/:/tmp/dev "toptour/snowapi"
 
 Source: NVE
 
