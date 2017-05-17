@@ -1,0 +1,6 @@
+layers: 
+- id: sd
+  name: snow
+  legendfile: snodybde.csv
+# - id: 
+# - id:

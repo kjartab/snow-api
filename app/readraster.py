@@ -7,9 +7,11 @@ import datetime
  
 def convert_to_raster(layer, wms_legend):
 	
-	output_file = "out.tiff"
+	output_dir = "data"
+	output_file = "out5s.tiff"
+	output_path = output_dir + "/" + output_file
 
-	ds = gdal.Open("/vagrant/snow_api/app/sources/" + layer + ".xml")
+	ds = gdal.Open('sources/' + layer + '.xml')
 
 	band_r = ds.GetRasterBand(1)
 	band_g = ds.GetRasterBand(2)
@@ -19,24 +21,34 @@ def convert_to_raster(layer, wms_legend):
 	data_g = BandReadAsArray(band_g)
 	data_b = BandReadAsArray(band_b)
 
+	noDataValue = 65535
+
 	xlen = len(data_r)
 	ylen = len(data_r[0])
 
 	def map_value(val):
 		return wms_legend.get(val)['est']
 
-	# output = data_r*data_g*data_b + data_r*data_g*data_b + data_r*data_g*data_b
+
 	output = np.zeros([xlen,ylen])
 	for i in xrange(0, xlen):
 		for j in xrange(0, ylen):
 			output[i][j] = map_value(data_r[i][j].astype(np.uint16) + data_g[i][j] + data_b[i][j])
-
+	
 	driver = gdal.GetDriverByName("GTiff")
-	dsOut = driver.Create(output_file, ds.RasterXSize, ds.RasterYSize, 1, band_r.DataType)
+	dsOut = driver.Create(output_path, ds.RasterXSize, ds.RasterYSize, 1, gdal.GDT_UInt16)
 	CopyDatasetInfo(ds, dsOut)
 	bandOut=dsOut.GetRasterBand(1)
-	BandWriteArray(bandOut, output)
+	bandOut.SetNoDataValue(noDataValue)
 
+	print "[ NO DATA VALUE ] = ", bandOut.GetNoDataValue()
+	print "[ MIN ] = ", bandOut.GetMinimum()
+	print "[ MAX ] = ", bandOut.GetMaximum()
+	print "[ SCALE ] = ", bandOut.GetScale()
+	print "[ UNIT TYPE ] = ", bandOut.GetUnitType()
+
+	BandWriteArray(bandOut, output)
+	
 
 def get_legend(file):
 	with open(file, 'r') as reader:
